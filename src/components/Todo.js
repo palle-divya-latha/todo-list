@@ -92,7 +92,9 @@ function Todo() {
     }
   };
 
-  const filteredTasks = searchTerm.trim() === '' ? tasks : searchResults;
+  const filteredTasks = searchTerm.trim() === '' 
+    ? tasks.filter(task => filter === 'all' || task.status === filter)
+    : searchResults;
 
   return (
     <div className="todo">
