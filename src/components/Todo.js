@@ -1,11 +1,9 @@
-// Todo.js
-
 import React, { useState, useEffect } from 'react';
 import './todo.css';
 import AddTaskModal from './AddTaskModal';
 import DeleteConfirmationModal from './DeleteTaskModal';
-import { RiEdit2Line, RiDeleteBin2Line } from 'react-icons/ri';
-import Header from '../Header'; 
+import { FaEdit, FaTrash } from "react-icons/fa";
+import Header from '../Header';
 
 function Todo() {
   const [tasks, setTasks] = useState([
@@ -25,6 +23,7 @@ function Todo() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -81,33 +80,26 @@ function Todo() {
     setIsAddingTask(true);
   };
 
-  const filteredTasks = tasks.filter(task => {
-    if (filter === 'all') {
-      return true;
-    } else if (filter === 'completed') {
-      return task.status === 'completed';
-    } else if (filter === 'inprogress') {
-      return task.status === 'inprogress';
-    } else if (filter === 'todo') {
-      return task.status === 'todo';
-    }
-  });
-
-  // Filter tasks based on search term
-  const searchedTasks = filteredTasks.filter(task => {
-    return task.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
+    if (searchTerm.trim() === '') {
+      setSearchResults([]);
+    } else {
+      const filteredTasks = tasks.filter(task =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchResults(filteredTasks);
+    }
   };
+
+  const filteredTasks = searchTerm.trim() === '' ? tasks : searchResults;
 
   return (
     <div className="todo">
-      <Header onSearch={handleSearch} /> {/* Pass search handler to Header component */}
-      
+      <Header onSearch={handleSearch} />
+
       <div className="todo-controls">
-        <div className="filter-container">
+        <div className="filter-container" style={{ color: 'rgba(126, 58, 35, 0.694)', fontWeight: '900', margin: '5px', padding: '5px',}}>
           <label className='filter' htmlFor="filter">Filter Tasks: </label>
           <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option className='all-tasks' value="all">All Tasks</option>
@@ -117,7 +109,6 @@ function Todo() {
           </select>
           <button className="add-task-button" onClick={() => setIsAddingTask(true)}>Add Task</button>
         </div>
-        
       </div>
 
       <AddTaskModal
@@ -141,45 +132,52 @@ function Todo() {
         onDelete={deleteTask}
       />
 
-      <div className="table-container" style={{ overflowX: 'auto' }}>
+      <div className="table-container" style={{ overflowX: 'auto', fontWeight: '900' }}>
         <table>
-          <thead>
+          <thead style={{color: 'rgba(126, 58, 35, 0.694)', backgroundColor: 'bisque', }}>
             <tr>
-              <th>S.No</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th style={{border: '2px solid rgba(126, 58, 35, 0.694)'}}>S.No</th>
+              <th style={{border: '2px solid rgba(126, 58, 35, 0.694)'}}>Title</th>
+              <th style={{border: '2px solid rgba(126, 58, 35, 0.694)'}}>Description</th>
+              <th style={{border: '2px solid rgba(126, 58, 35, 0.694)'}}>Status</th>
+              <th style={{border: '2px solid rgba(126, 58, 35, 0.694)'}}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {searchedTasks.map((task, index) => (
-              <tr key={task.id}>
-                <td>{index + 1}</td>
-                <td>{task.title}</td>
-                <td>{task.description}</td>
-                <td>
-                  <select
-                    value={task.status}
-                    onChange={(e) => handleStatusChange(task.id, e.target.value)}
-                  >
-                    <option value="todo">To Do</option>
-                    <option value="inprogress">In Progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  <button className="edit-button" onClick={() => editTask(task.id)}>
-                    <RiEdit2Line style={{ color: 'green' }} /> {/* Edit icon */}
-                    <span className="button-text">Edit</span> {/* Text */}
-                  </button>
-                  <button className="delete-button" onClick={() => openDeleteModal(task.id)}>
-                    <RiDeleteBin2Line style={{ color: 'red' }} /> {/* Delete icon */}
-                    <span className="button-text">Delete</span> {/* Text */}
-                  </button>
-                </td>
+            {filteredTasks.length === 0 ? (
+              <tr>
+                <td colSpan="5">No results found</td>
               </tr>
-            ))}
+            ) : (
+              filteredTasks.map((task, index) => (
+                <tr key={task.id}>
+                  <td>{index + 1}</td>
+                  <td>{task.title}</td>
+                  <td>{task.description}</td>
+                  <td>
+                    <select
+                      value={task.status}
+                      onChange={(e) => handleStatusChange(task.id, e.target.value)}
+                      style={{width: 'fit-content', color: 'rgba(126, 58, 35, 0.694)', backgroundColor: 'bisque', fontWeight: '900', outline: 'none', cursor: 'pointer'}}
+                    >
+                      <option value="todo">To Do</option>
+                      <option value="inprogress">In Progress</option>
+                      <option value="completed">Completed</option>
+                    </select>
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    <button className="edit-button" onClick={() => editTask(task.id)}>
+                      < FaEdit  style={{ color: 'green' }} /> 
+                      <span className="button-text">Edit</span> 
+                    </button>
+                    <button className="delete-button" onClick={() => openDeleteModal(task.id)}>
+                      <FaTrash style={{ color: 'red' }} /> 
+                      <span className="button-text">Delete</span> 
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

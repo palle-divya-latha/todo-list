@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { LuListTodo } from "react-icons/lu";
+import './App.css'; // Import CSS file for Header styling
 
 const Header = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +13,7 @@ const Header = ({ onSearch }) => {
 
   return (
     <div className='header'>
-      <div className='title '>
+      <div className='title'>
         <LuListTodo style={{ backgroundColor: 'bisque', color: 'rgba(126, 58, 35, 0.694)' }} /> To Do List
       </div>
       <div className='search'>

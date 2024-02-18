@@ -70,10 +70,10 @@
     width: fit-content;
   }
   
-  /* Styles for filter button */
+ 
 select#filter {
   padding: 5px;
-  background-color: bisque; /* Set background color to transparent */
+  background-color: bisque; 
   border: none; 
   color: black; 
   cursor: pointer;
@@ -83,13 +83,13 @@ select#filter {
 }
 
 select#filter option {
-  background-color: rgba(126, 58, 35, 0.694); /* Background color when option is hovered */
-  color: bisque; /* Text color when option is hovered */
+  background-color: rgba(126, 58, 35, 0.694); 
+  color: bisque;
 }
 
 select#filter option:checked {
-  background-color: rgba(126, 58, 35, 0.694); /* Background color when option is selected */
-  color: bisque; /* Text color when option is selected */
+  background-color: rgba(126, 58, 35, 0.694);
+  color: bisque; 
 }
 
 
@@ -113,3 +113,23 @@ select#filter option:checked {
     color: black;
   }
   
+  .delete-button{
+    height: auto;
+  }
+  .edit-button{
+    height: auto;
+
+  }
+
+  
+.table-container {
+  overflow-x: auto; 
+  max-width: 100%;
+}
+
+/* Media query for screens with a minimum width of 660px */
+@media screen and (min-width: 660px) {
+  .table-container {
+    overflow-x: auto; 
+  }
+}

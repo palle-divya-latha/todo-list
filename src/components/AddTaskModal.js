@@ -12,6 +12,8 @@ function AddTaskModal({ isOpen, onClose, onSubmit, onChange, title, description,
           <label>
             Title:
             <input
+            style={{backgroundColor: 'rgba(126, 58, 35, 0.694)', color: 'bisque', fontWeight: '900' }}
+            className='input'
               type="text"
               value={title}
               onChange={onChange}
@@ -20,7 +22,7 @@ function AddTaskModal({ isOpen, onClose, onSubmit, onChange, title, description,
           </label>
           <label>
             Description:
-            <input
+            <textarea
               type="text"
               value={description}
               onChange={onChange}
