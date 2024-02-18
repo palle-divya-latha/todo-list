@@ -1,3 +1,30 @@
+# Todo List Application
+
+## Functionality Overview
+## Create Task:
+
+### Functionality: 
+Allows users to add new tasks to the todo list.
+### How it works: 
+Users click the "Add Task" button, which opens a modal window where they can input the title, description, and status (To Do, In Progress, Completed) of the task. Upon submitting the form, the new task is added to the list.
+## Edit Task:
+
+### Functionality:
+Enables users to modify existing tasks.
+### How it works: Users click the "Edit" button next to the task they want to modify. This action opens a modal window pre-filled with the task's current details. Users can then update the title, description, and status as needed. After making changes, users click "Save" to apply the modifications.
+## Delete Task:
+
+### Functionality:
+Allows users to remove tasks from the todo list.
+### How it works: 
+Users click the "Delete" button next to the task they want to delete. A confirmation modal appears, asking users to confirm the deletion. Upon confirmation, the task is permanently removed from the list.
+Search Task:
+
+### Functionality: 
+Facilitates searching for tasks based on their titles.
+### How it works: 
+Users enter search queries into the search bar located at the top of the page. As users type, the application dynamically filters the tasks displayed on the screen to match the search criteria. This feature helps users quickly locate specific tasks within the list.
+These functionalities collectively provide users with the ability to manage their todo list effectively, including adding, editing, deleting, and searching tasks to keep track of their tasks and progress.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
